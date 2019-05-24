@@ -24,3 +24,6 @@ kummerbot-*.tar
 
 # Ignore secrets
 secret.exs
+
+# Ignore VS Code Stuff
+/.elixir_ls
