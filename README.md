@@ -18,5 +18,5 @@ Set kummerbot message channel in `config.exs`:
 
 ```elixir
 config :kummerbot,
-    kummerchannel: your kummerbot message channel
+    kummerchannel: your_kummerbot_message_channel_id
 ```
