@@ -1,21 +1,22 @@
 # Kummerbot
 
-**TODO: Add description**
+Discord Bot
 
-## Installation
+## Setup
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `kummerbot` to your list of dependencies in `mix.exs`:
+Create `secret.exs` in `config/` with this content:
 
 ```elixir
-def deps do
-  [
-    {:kummerbot, "~> 0.1.0"}
-  ]
-end
+use Mix.Config
+
+config :nostrum,
+  token: "your bot token",
+  num_shards: :auto
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/kummerbot](https://hexdocs.pm/kummerbot).
+Set kummerbot message channel in `config.exs`:
 
+```elixir
+config :kummerbot,
+    kummerchannel: your kummerbot message channel
+```
