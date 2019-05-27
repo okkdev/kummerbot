@@ -12,7 +12,7 @@ defmodule Kummerbot.Command.Util do
       %Nostrum.Struct.Embed{}
       |> put_title("Anonym")
       |> put_description(msg.content)
-      |> put_color(6579455)
+      |> put_color(Enum.random(1..16777215))
 
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
   end
