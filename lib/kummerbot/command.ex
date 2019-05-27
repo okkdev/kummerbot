@@ -7,9 +7,15 @@ defmodule Kummerbot.Command do
     msg.author.id != @bot_id
   end
 
+  defp direct_message?(msg) do
+    msg.guild_id == nil
+  end
+
   def handle(msg) do
     if actionable_command?(msg) do
-      Util.ping(msg)
+      if direct_message?(msg) do
+        Util.mail(msg)
+      end
     end
   end
 

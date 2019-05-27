@@ -4,6 +4,8 @@ defmodule Kummerbot.Application do
   use Application
 
   def start(_type, _args) do
+    Nostrum.Api.update_status(nil, "your concerns. Send me a DM", 2, nil)
+
     children =
       for i <- 1..System.schedulers_online(), do: Supervisor.child_spec({Kummerbot.Consumer, []}, id: i)
 
