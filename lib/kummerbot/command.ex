@@ -9,15 +9,8 @@ defmodule Kummerbot.Command do
 
   def handle(msg) do
     if actionable_command?(msg) do
-      msg.content
-      |> String.trim()
-      |> String.split(" ")
-      |> execute(msg)
+      Util.ping(msg)
     end
-  end
-
-  def execute(["ping"], msg) do
-    Util.ping(msg)
   end
 
   def execute(_any, _msg) do

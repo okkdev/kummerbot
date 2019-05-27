@@ -1,7 +1,5 @@
 defmodule Kummerbot.Consumer do
   use Nostrum.Consumer
-  alias Nostrum.Api
-
   alias Kummerbot.Command
 
   def start_link do
@@ -10,7 +8,6 @@ defmodule Kummerbot.Consumer do
 
   def handle_event({:MESSAGE_CREATE, {msg}, _ws_state}) do
     Command.handle(msg)
-    Api.create_message(msg.channel_id, "pong")
   end
 
   def handle_event(_event) do
