@@ -1,7 +1,7 @@
 defmodule Kummerbot.Command do
   alias Kummerbot.Command.Util
 
-  @bot_id 582318656009011233
+  @bot_id Application.get_env(:kummerbot, :bot_id)
 
   defp actionable_command?(msg) do
     msg.author.id != @bot_id
