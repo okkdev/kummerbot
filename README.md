@@ -1,6 +1,7 @@
 # Kummerbot
 
 Discord Bot that pipes direct messages to a channel in a server.
+
 This enables submission of anonymous messages to that channel. 
 
 ## Setup
@@ -21,10 +22,4 @@ Set bot id and kummerbot message channel in `dev.config.exs`:
 config :kummerbot,
     bot_id: your_bot_id,
     kummerchannel: your_kummerbot_message_channel_id
-```
-
-Set the environment variable:
-
-```bash
-$ MIX_ENV=dev
 ```
