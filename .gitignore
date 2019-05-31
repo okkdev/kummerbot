@@ -23,7 +23,7 @@ erl_crash.dump
 kummerbot-*.tar
 
 # Ignore secrets
-secret.exs
+*.secret.exs
 
 # Ignore VS Code Stuff
 /.elixir_ls

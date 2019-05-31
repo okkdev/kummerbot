@@ -21,10 +21,6 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
-config :kummerbot,
-    bot_id: 582318656009011233,
-    kummerchannel: 580815063678713866
-
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
@@ -33,4 +29,4 @@ config :kummerbot,
 #
 #     import_config "#{Mix.env()}.exs"
 
-import_config "secret.exs"
+import_config "#{Mix.env()}.exs"

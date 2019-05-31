@@ -7,7 +7,7 @@ defmodule Kummerbot.Consumer do
   end
 
   def handle_event({:READY, {}, _ws_state}) do
-    Nostrum.Api.update_status(:idle, "your concerns. Send me a DM", 2, nil)
+    Nostrum.Api.update_status(:idle, "your concerns. Send me a DM :love_letter:", 2, nil)
   end
 
   def handle_event({:MESSAGE_CREATE, {msg}, _ws_state}) do
