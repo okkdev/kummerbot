@@ -18,7 +18,7 @@ defmodule Kummerbot.Command.Util do
 
     embedmsg =
       %Nostrum.Struct.Embed{}
-      |> put_title("Anonym")
+      |> put_title("Anonymous")
       |> put_description(msg.content)
       |> put_color(Enum.random(1..16777215))
       |> put_image(get_image_url(msg))
