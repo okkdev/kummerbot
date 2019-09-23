@@ -3,14 +3,10 @@ defmodule Kummerbot.Consumer do
   alias Kummerbot.Command
 
   def start_link do
-    Consumer.start_link(__MODULE__, max_restarts: 0)
+    Consumer.start_link(__MODULE__)
   end
 
-  def handle_event({:READY, {}, _ws_state}) do
-    Nostrum.Api.update_status(:idle, "your concerns. Send me a DM :love_letter:", 2, nil)
-  end
-
-  def handle_event({:MESSAGE_CREATE, {msg}, _ws_state}) do
+  def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
     Command.handle(msg)
   end
 
