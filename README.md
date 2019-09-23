@@ -1,21 +1,25 @@
 # Kummerbot
 
-**TODO: Add description**
+Discord Bot that pipes direct messages to a channel in a server.
 
-## Installation
+This enables submission of anonymous messages to that channel. 
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `kummerbot` to your list of dependencies in `mix.exs`:
+## Setup
+
+Create `dev.secret.exs` in `config/` with this content:
 
 ```elixir
-def deps do
-  [
-    {:kummerbot, "~> 0.1.0"}
-  ]
-end
+use Mix.Config
+
+config :nostrum,
+  token: "your bot token",
+  num_shards: :auto
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/kummerbot](https://hexdocs.pm/kummerbot).
+Set bot id and kummerbot message channel in `dev.config.exs`:
 
+```elixir
+config :kummerbot,
+    bot_id: your_bot_id,
+    kummerchannel: your_kummerbot_message_channel_id
+```
