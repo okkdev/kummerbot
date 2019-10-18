@@ -5,6 +5,8 @@ defmodule Kummerbot.Command.Util do
 
   require Logger
 
+  @alphabet Enum.to_list(?a..?z) ++ Enum.to_list(?0..?9)
+
   defp get_image_url(msg) do
     if List.first(msg.attachments) != nil do
       msg.attachments
@@ -32,6 +34,7 @@ defmodule Kummerbot.Command.Util do
       |> put_description(content)
       |> put_color(Enum.random(1..16_777_215))
       |> put_image(get_image_url(msg))
+      |> put_footer("#" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end)))
 
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
   end
