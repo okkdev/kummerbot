@@ -34,7 +34,7 @@ defmodule Kummerbot.Command.Util do
       |> put_description(content)
       |> put_color(Enum.random(1..16_777_215))
       |> put_image(get_image_url(msg))
-      |> put_footer("#" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end)))
+      |> put_footer("@" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end)))
 
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
   end
