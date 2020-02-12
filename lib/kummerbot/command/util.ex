@@ -9,7 +9,7 @@ defmodule Kummerbot.Command.Util do
 
   defp video_or_image(url) do
     # Expand list with supported video formats
-    if String.ends_with?(url, ".mp4") do
+    if String.ends_with?(url, [".mp4"]) do
       %{video: url}
     else
       %{image: url}
@@ -47,6 +47,8 @@ defmodule Kummerbot.Command.Util do
   def mail(msg) do
     Api.create_message(msg.channel_id, "Thank you :slight_smile:")
 
+    id = "@" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end))
+
     [name, content] =
       if String.starts_with?(msg.content, "!") do
         msg.content
@@ -63,8 +65,14 @@ defmodule Kummerbot.Command.Util do
       |> put_description(content)
       |> put_color(Enum.random(1..16_777_215))
       |> put_attachment(msg)
-      |> put_footer("@" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end)))
+      |> put_footer(id)
 
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
+
+    if embedmsg.video do
+      Api.create_message(Application.get_env(:kummerbot, :kummerchannel),
+        content: id <> " Video: " <> embedmsg.video.url
+      )
+    end
   end
 end
