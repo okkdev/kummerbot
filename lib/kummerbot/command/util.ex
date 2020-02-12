@@ -7,11 +7,40 @@ defmodule Kummerbot.Command.Util do
 
   @alphabet Enum.to_list(?a..?z) ++ Enum.to_list(?0..?9)
 
-  defp get_image_url(msg) do
+  defp video_or_image(url) do
+    # Expand list with supported video formats
+    if String.ends_with?(url, ".mp4") do
+      %{video: url}
+    else
+      %{image: url}
+    end
+  end
+
+  defp get_attachment_url(msg) do
     if List.first(msg.attachments) != nil do
       msg.attachments
       |> List.first()
       |> Map.get(:url)
+    end
+  end
+
+  defp add_attachment(%{video: url}, embed) do
+    put_video(embed, url)
+  end
+
+  defp add_attachment(%{image: url}, embed) do
+    put_image(embed, url)
+  end
+
+  defp put_attachment(embed, msg) do
+    url = get_attachment_url(msg)
+
+    if url === nil do
+      embed
+    else
+      url
+      |> video_or_image
+      |> add_attachment(embed)
     end
   end
 
@@ -33,7 +62,7 @@ defmodule Kummerbot.Command.Util do
       |> put_title(name)
       |> put_description(content)
       |> put_color(Enum.random(1..16_777_215))
-      |> put_image(get_image_url(msg))
+      |> put_attachment(msg)
       |> put_footer("@" <> to_string(Enum.map(1..5, fn _ -> Enum.random(@alphabet) end)))
 
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
