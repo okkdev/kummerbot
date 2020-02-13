@@ -70,8 +70,15 @@ defmodule Kummerbot.Command.Util do
     Api.create_message(Application.get_env(:kummerbot, :kummerchannel), embed: embedmsg)
 
     if embedmsg.video do
+      %HTTPoison.Response{body: body} = HTTPoison.get!(embedmsg.video.url)
+
+      name =
+        String.split(embedmsg.video.url, "/")
+        |> List.last()
+
       Api.create_message(Application.get_env(:kummerbot, :kummerchannel),
-        content: id <> " Video: " <> embedmsg.video.url
+        content: id <> " Video:",
+        file: %{name: name, body: body}
       )
     end
   end
