@@ -53,9 +53,7 @@ RUN mix deps.get
 RUN mix deps.compile
 RUN mix release
 
-FROM alpine:latest AS runner
-
-ARG kummerbot
+FROM alpine AS runner
 
 RUN apk update && \
     apk add --no-cache bash
