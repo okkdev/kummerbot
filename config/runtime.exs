@@ -5,5 +5,4 @@ config :nostrum,
   num_shards: :auto
 
 config :kummerbot,
-  kummer_channel: String.to_integer(System.fetch_env!("KUMMER_CHANNEL")),
-  feedback_channel: String.to_integer(System.fetch_env!("FEEDBACK_CHANNEL"))
+  kummer_channel: String.to_integer(System.fetch_env!("KUMMER_CHANNEL"))

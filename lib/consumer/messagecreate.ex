@@ -1,19 +1,12 @@
 defmodule Kummerbot.Consumer.MessageCreate do
-  alias Kummerbot.Command.Anonmail
+  alias Kummerbot.Command.Mailer
 
+  # ignore self and other bots
   def handle(%{author: %{bot: true}}), do: :noop
 
+  # direct message
   def handle(%{guild_id: nil} = msg) do
-    case String.split(String.downcase(msg.content)) do
-      ["feedback:"] ->
-        :noop
-
-      ["feedback:" | _] ->
-        Anonmail.feedback(msg)
-
-      _ ->
-        Anonmail.mail(msg)
-    end
+    Mailer.mail(msg)
   end
 
   def handle(_), do: :noop
