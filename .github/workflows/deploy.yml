@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy (GitHub -> Docker Hub -> Kubernetes)
+name: Deploy (GitHub -> DockerHub -> Kubernetes)
 
 on:
   push:
@@ -31,6 +31,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
   deploy:
+    needs: [ build ]
     name: Deploy to cluster
     runs-on: ubuntu-latest
     steps:
