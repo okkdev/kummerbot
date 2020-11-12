@@ -21,7 +21,7 @@ jobs:
       uses: nickgronow/kubectl@master
       with:
         config_data: ${{ secrets.KUBE_CONFIG_DATA }}
-        args: set image --record deployment/kummerbot-deployment kummerbot=okkdev/kummerbot:latest
+        args: set image -n apps --record deployment/kummerbot-deployment kummerbot=okkdev/kummerbot:latest
     - name: Verify deployment
       uses: nickgronow/kubectl@master
       with:
