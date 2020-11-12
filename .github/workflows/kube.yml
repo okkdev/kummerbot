@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Kubernetes CD
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_run:
+    workflows: ["Docker build and push"]
+    branches: [master]
+    types: 
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy to cluster
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Deploy to cluster
+      uses: nickgronow/kubectl@master
+      with:
+        config_data: ${{ secrets.KUBE_CONFIG_DATA }}
+        args: set image --record deployment/kummerbot-deployment kummerbot=okkdev/kummerbot:latest
+    - name: Verify deployment
+      uses: nickgronow/kubectl@master
+      with:
+        config_data: ${{ secrets.KUBE_CONFIG_DATA }}
+        args: '"rollout status deployment/kummerbot-deployment"'
