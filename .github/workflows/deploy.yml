@@ -1,23 +1,16 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Docker build and push
+name: Deploy (GitHub -> Docker Hub -> Kubernetes)
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    name: Deploy to DockerHub
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Set up QEMU
@@ -37,3 +30,18 @@ jobs:
           tags: okkdev/kummerbot:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  deploy:
+    name: Deploy to cluster
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Deploy to cluster
+        uses: nickgronow/kubectl@master
+        with:
+          config_data: ${{ secrets.KUBE_CONFIG_DATA }}
+          args: set image -n apps --record deployment/kummerbot-deployment kummerbot=okkdev/kummerbot:latest
+      - name: Verify deployment
+        uses: nickgronow/kubectl@master
+        with:
+          config_data: ${{ secrets.KUBE_CONFIG_DATA }}
+          args: '"rollout status -n apps deployment/kummerbot-deployment"'
