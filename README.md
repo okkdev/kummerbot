@@ -11,3 +11,5 @@ You neet to set the correct environment variables.
 `BOT_TOKEN` - Discord bot token
 
 `KUMMER_CHANNEL` - ID of the channel where the messages are sent
+
+`DATABASE_URL` - URL to the Postgres database

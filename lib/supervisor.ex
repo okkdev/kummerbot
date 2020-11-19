@@ -7,7 +7,10 @@ defmodule Kummerbot.Supervisor do
 
   @impl true
   def init(_init_arg) do
-    children = [Kummerbot.Consumer]
+    children = [
+      Kummerbot.Repo,
+      Kummerbot.Consumer
+    ]
 
     Supervisor.init(children, strategy: :one_for_one)
   end
