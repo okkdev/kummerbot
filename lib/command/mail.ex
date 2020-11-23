@@ -1,57 +1,71 @@
-defmodule Kummerbot.Command.Mailer do
-  alias Nostrum.Api
-
+defmodule Kummerbot.Command.Mail do
   import Nostrum.Struct.Embed
+  alias Nostrum.Api
+  alias Kummerbot.Utils.Identity
 
-  def mail(msg) do
+  def send_mail(msg) do
     case get_attachment(msg) do
       {:ok} ->
-        msg.content
+        msg
         |> create_embed("Anonymous")
-        |> sendmsg()
+        |> send_message()
         |> confirm(msg.channel_id)
 
       {:ok, :image, url} ->
-        msg.content
+        msg
         |> create_embed("Anonymous")
         |> put_image(url)
-        |> sendmsg()
+        |> send_message()
         |> confirm(msg.channel_id)
 
       {:ok, :video, url} ->
-        msg.content
+        msg
         |> create_embed("Anonymous")
         |> put_video(url)
-        |> sendmsg()
+        |> send_message()
         |> confirm(msg.channel_id)
 
       {:error, err} ->
-        Api.create_message(msg.channel_id, err)
+        Api.create_message(msg.channel_id,
+          embed: %Nostrum.Struct.Embed{
+            description: err
+          }
+        )
     end
   end
 
-  defp sendmsg(embed) do
-    sendmsg(embed, :kummer)
+  defp send_message(embed) do
+    send_message(embed, :kummer)
   end
 
-  defp sendmsg(embed, :kummer) do
+  defp send_message(embed, :kummer) do
     Api.create_message(Application.get_env(:kummerbot, :kummer_channel), embed: embed)
   end
 
   defp confirm({:ok, _}, channel_id) do
-    Api.create_message(channel_id, "Message delivered :love_letter:")
+    Api.create_message(channel_id,
+      embed: %Nostrum.Struct.Embed{
+        description: "Message delivered :love_letter:",
+        color: Application.get_env(:kummerbot, :embed_color)
+      }
+    )
   end
 
   defp confirm({:error, _}, channel_id) do
-    Api.create_message(channel_id, "There was an error delivering your message :pensive:")
+    Api.create_message(channel_id,
+      embed: %Nostrum.Struct.Embed{
+        description: "There was an error delivering your message :pensive:",
+        color: Application.get_env(:kummerbot, :embed_color)
+      }
+    )
   end
 
-  defp create_embed(content, title) do
+  defp create_embed(%Nostrum.Struct.Message{} = msg, title) do
     %Nostrum.Struct.Embed{}
     |> put_title(title)
-    |> put_description(content)
+    |> put_description(msg.content)
     |> put_color(Enum.random(1..16_777_215))
-    |> put_footer("@" <> Nanoid.generate(5))
+    |> put_footer("@#{Identity.get_identity!(msg.author).nano_id}")
   end
 
   defp get_attachment(%{attachments: []}) do

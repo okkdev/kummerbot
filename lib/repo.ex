@@ -5,6 +5,7 @@ defmodule Kummerbot.Repo do
 
   # Get DB URL from env var if available
   def init(_type, config) do
-    {:ok, Keyword.put(config, :url, System.get_env("DATABASE_URL", Keyword.get(config, :url)))}
+    {:ok,
+     Keyword.put(config, :url, System.get_env("KUMMER_DATABASE_URL", Keyword.get(config, :url)))}
   end
 end
