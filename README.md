@@ -4,7 +4,12 @@ Discord Bot that pipes direct messages to a channel in a server.
 
 This enables submission of anonymous messages to that channel. 
 
+## Prerequisites
+
+You need to have a Postgres database running.
+
 ## Setup Docker
+
 1. Get the container `docker pull okkdev/kummerbot`
 1. Run the container. Example: `docker run -e BOT_TOKEN=your_bot_token -e KUMMER_CHANNEL=your_kummer_channel -d okkdev/kummerbot`
 
@@ -19,6 +24,7 @@ This enables submission of anonymous messages to that channel.
 (optional) `KUMMER_PREFIX` - prefix for the bot commands (default: `.`)
 
 ## Development
+
 1. Clone repo
 1. Set env vars
 1. Get dependencies `mix deps.get`
