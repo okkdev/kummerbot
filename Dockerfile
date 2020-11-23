@@ -24,4 +24,6 @@ RUN mkdir /opt/app
 WORKDIR /opt/app
 COPY --from=builder /opt/app/_build/prod/rel/kummerbot .
 
-CMD ["./bin/kummerbot", "start"]
+COPY entrypoint.sh .
+
+CMD ["./entrypoint.sh"]
