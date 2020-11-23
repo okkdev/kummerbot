@@ -11,7 +11,7 @@ You need to have a Postgres database running.
 ## Setup Docker
 
 1. Get the container `docker pull okkdev/kummerbot`
-1. Run the container. Example: `docker run -e KUMMER_BOT_TOKEN=your_bot_token -e KUMMER_CHANNEL=your_kummer_channel -d okkdev/kummerbot`
+1. Run the container. Example: `docker run -e KUMMER_BOT_TOKEN=your_bot_token -e KUMMER_CHANNEL=your_kummer_channel -e KUMMER_DATABASE_URL=your_postgres_db_url -d okkdev/kummerbot`
 
 ## Environment variables
 
@@ -19,7 +19,7 @@ You need to have a Postgres database running.
 
 `KUMMER_CHANNEL` - ID of the channel where the messages are sent
 
-(optional) `KUMMER_DATABASE_URL` - URL to the Postgres database (default: `ecto://postgres:postgres@localhost/kummerbot_repo`)
+`KUMMER_DATABASE_URL` - URL to the Postgres database (default: `ecto://postgres:postgres@localhost/kummerbot_repo`)
 
 (optional) `KUMMER_PREFIX` - prefix for the bot commands (default: `.`)
 
