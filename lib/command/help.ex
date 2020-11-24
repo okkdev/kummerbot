@@ -2,7 +2,7 @@ defmodule Kummerbot.Command.Help do
   import Nostrum.Struct.Embed
   alias Nostrum.Api
 
-  def send_help(msg) do
+  def send_help({%Nostrum.Struct.Message{} = msg, identity}) do
     embed =
       %Nostrum.Struct.Embed{}
       |> put_title("Help")
@@ -11,7 +11,7 @@ defmodule Kummerbot.Command.Help do
       |> put_field(".help", "Get help")
       |> put_field(".id", "Get your current ID")
       |> put_field(".resetid", "Get a new ID")
-      |> put_color(Application.get_env(:kummerbot, :embed_color))
+      |> put_color(identity.color)
       |> put_footer("Kummerbot made by okk#2094 ❤️")
 
     Api.create_message(msg.channel_id, embed: embed)

@@ -13,7 +13,7 @@ defmodule Kummerbot.Utils.Identity do
   """
   def update_nanoid(%Nostrum.Struct.User{} = user) do
     get_identity!(user)
-    |> Ecto.Changeset.change(nano_id: Nanoid.generate(5))
+    |> Ecto.Changeset.change(nano_id: Nanoid.generate(5), color: Enum.random(1..16_777_215))
     |> Repo.update()
   end
 
@@ -21,12 +21,12 @@ defmodule Kummerbot.Utils.Identity do
     case Repo.get_by(Identification, user_id: to_string(user.id)) do
       %Identification{} = identity ->
         Logger.debug("User #{identity.nano_id} identified")
-        :ok
+        {:ok, identity}
 
       nil ->
         identity = create_identity!(user)
         Logger.debug("User #{identity.nano_id} created")
-        :created
+        {:ok, identity}
 
       _ ->
         Logger.error("Couldn't check identity")
@@ -34,6 +34,10 @@ defmodule Kummerbot.Utils.Identity do
   end
 
   defp create_identity!(%Nostrum.Struct.User{} = user) do
-    Repo.insert!(%Identification{user_id: to_string(user.id), nano_id: Nanoid.generate(5)})
+    Repo.insert!(%Identification{
+      user_id: to_string(user.id),
+      nano_id: Nanoid.generate(5),
+      color: Enum.random(1..16_777_215)
+    })
   end
 end

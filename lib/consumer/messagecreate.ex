@@ -8,7 +8,7 @@ defmodule Kummerbot.Consumer.MessageCreate do
 
   # direct message command
   def handle(%{guild_id: nil} = msg) do
-    Identity.check_identity(msg.author)
+    {:ok, identity} = Identity.check_identity(msg.author)
 
     if String.starts_with?(msg.content, Application.get_env(:kummerbot, :prefix)) do
       case String.trim_leading(
@@ -16,10 +16,10 @@ defmodule Kummerbot.Consumer.MessageCreate do
              Application.get_env(:kummerbot, :prefix)
            ) do
         "help" ->
-          Help.send_help(msg)
+          Help.send_help({msg, identity})
 
         "id" ->
-          Id.get_id(msg)
+          Id.get_id({msg, identity})
 
         "resetid" ->
           Id.reset_id(msg)
@@ -31,12 +31,12 @@ defmodule Kummerbot.Consumer.MessageCreate do
               Unknown command :triumph:
               Try `.help`
               """,
-              color: Application.get_env(:kummerbot, :embed_color)
+              color: identity.color
             }
           )
       end
     else
-      Mail.send_mail(msg)
+      Mail.send_mail({msg, identity})
     end
   end
 
