@@ -4,7 +4,7 @@ defmodule Kummerbot.MixProject do
   def project do
     [
       app: :kummerbot,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -23,7 +23,9 @@ defmodule Kummerbot.MixProject do
   defp deps do
     [
       {:nostrum, "~> 0.4"},
-      {:nanoid, "~> 2.0"}
+      {:nanoid, "~> 2.0"},
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, ">= 0.0.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
